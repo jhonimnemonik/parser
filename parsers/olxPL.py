@@ -1,7 +1,6 @@
 import time
 import random
 from parsers.base_parser import BaseParser
-from bs4 import BeautifulSoup as bs
 import requests
 
 
@@ -21,7 +20,8 @@ class OlxParser(BaseParser):
                 random_sleep_time = random.randint(1, 3)
                 page = f'?page={page_num}&'
                 link = f'{part1}{page}{part2}'
-                items = self.extract_items(link)
+                new_soup = (self._get_html(link))[0]
+                items = new_soup.select(".css-oukcj3 > .css-1sw7q4x")
                 if items:
                     for item in items:
                         title = item.find(class_="css-16v5mdi er34gjf0").text.strip()
@@ -55,14 +55,6 @@ class OlxParser(BaseParser):
         except requests.exceptions.RequestException as e:
             print(f'Не удалось получить доступ к странице: {self.url}, ошибка: {e}')
             return None
-    def extract_items(self, link):
-        result = self._get_html(link)
-        if result:
-            soup = result[0]
-            items = soup.select(".css-oukcj3 > .css-1sw7q4x")
-            return items
-        else:
-            return []
 
 if __name__ == '__main__':
     # url = input('Введите ссылку с сайта olx.pl: ')
