@@ -1,6 +1,7 @@
-from parsers.medigenceСom import MedigenceParser
+from parsers.medigence_com import MedigenceParser
 from parsers.kolesa_kz import KolesaParser
-from parsers.olxPL import OlxParser
+from parsers.olx_pl import OlxParser
+
 
 def main():
     print('Запуск парсера сайта kolesa.kz')

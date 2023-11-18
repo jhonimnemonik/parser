@@ -55,8 +55,9 @@ class BaseParser(ABC):
 
     def save_file(self):
         try:
-            file_name = self.__class__.__name__
-            output_dir = 'Data'
+            class_name = self.__class__.__name__
+            file_name = class_name.split('Parser')[0]
+            output_dir = 'data'
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
             file_path = os.path.join(output_dir, file_name + '.json')
